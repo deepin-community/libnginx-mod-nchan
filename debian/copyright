@@ -22,7 +22,7 @@ License: Expat
 
 Files: debian/*
 Copyright: 2022, Miao Wang <shankerwangmiao@gmail.com>
- 2022, 2023, Jan Mojzis <jan.mojzis@gmail.com>
+ 2022-2025, Jan Mojzis <janmojzis@debian.org>
 License: BSD-3-clause
 
 Files: src/store/redis/cmp.c

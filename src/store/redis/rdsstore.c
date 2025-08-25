@@ -223,7 +223,7 @@ ngx_int_t parse_redis_url(ngx_str_t *url, redis_connect_params_t *rcp) {
     cur = ret + 1;
     
     //port
-    if((ret = ngx_strlchr(cur, last, '/')) == NULL) {
+    if(((ret = ngx_strlchr(cur, last, '/')) == NULL) && ((ret = ngx_strlchr(cur, last, ' ')) == NULL)) {
       ret = last;
     }
     rcp->port = ngx_atoi(cur, ret-cur);
@@ -243,7 +243,21 @@ ngx_int_t parse_redis_url(ngx_str_t *url, redis_connect_params_t *rcp) {
   else {
     rcp->db = 0;
   }
-
+  
+  ngx_str_t leftovers;
+  leftovers.len = last - cur;
+  leftovers.data = cur;
+  
+  if(nchan_ngx_str_substr(&leftovers, "master")) {
+    rcp->forced_role = REDIS_FORCED_ROLE_MASTER;
+  }
+  else if(nchan_ngx_str_substr(&leftovers, "slave")) {
+    rcp->forced_role = REDIS_FORCED_ROLE_SLAVE;
+  }
+  else {
+    rcp->forced_role = REDIS_FORCED_ROLE_NONE;
+  }
+  
   return NGX_OK;
 }
 
@@ -1558,7 +1572,6 @@ static ngx_int_t redis_array_to_channel(redisReply *r, nchan_channel_t *ch) {
     && CHECK_REPLY_INT(r->element[4])) {
     
     //channel info
-    ch->expires = ngx_time() + r->element[0]->integer;
     ch->last_seen = r->element[1]->integer;
     ch->subscribers = r->element[2]->integer;
   

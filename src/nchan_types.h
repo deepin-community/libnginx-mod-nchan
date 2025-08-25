@@ -148,7 +148,6 @@ typedef struct {
   ngx_int_t                       messages;
   ngx_int_t                       subscribers;
   time_t                          last_seen;
-  time_t                          expires;
   nchan_msg_id_t                  last_published_msg_id;
 } nchan_channel_t;
 
@@ -533,6 +532,11 @@ typedef struct {
   ngx_str_t     password;
   ngx_int_t     db;
   ngx_int_t     use_tls;
+  enum {
+    REDIS_FORCED_ROLE_NONE = 0,
+    REDIS_FORCED_ROLE_MASTER,
+    REDIS_FORCED_ROLE_SLAVE
+  }             forced_role;
 } redis_connect_params_t;
 
 #endif  /* NCHAN_TYPES_H */
