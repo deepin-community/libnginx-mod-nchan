@@ -2,10 +2,12 @@ Source: libnginx-mod-nchan
 Section: httpd
 Priority: optional
 Maintainer: Debian Nginx Maintainers <pkg-nginx-maintainers@alioth-lists.debian.net>
-Uploaders: Jan Mojžíš <jan.mojzis@gmail.com>,
-Build-Depends: debhelper-compat (= 13),
-               dh-sequence-nginx,
-Standards-Version: 4.6.2
+Uploaders:
+ Jan Mojžíš <janmojzis@debian.org>,
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-sequence-nginx,
+Standards-Version: 4.7.2
 Homepage: https://github.com/slact/nchan
 Vcs-Git: https://salsa.debian.org/nginx-team/libnginx-mod-nchan.git
 Vcs-Browser: https://salsa.debian.org/nginx-team/libnginx-mod-nchan
@@ -14,9 +16,11 @@ Rules-Requires-Root: no
 Package: libnginx-mod-nchan
 Architecture: any
 Multi-Arch: foreign
-Depends: ${misc:Depends},
-         ${shlibs:Depends},
-Recommends: nginx,
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+Recommends:
+ nginx,
 Description: Fast, flexible pub/sub server for Nginx
  Nchan is a scalable, flexible pub/sub server for the modern web, It can be
  configured as a standalone server, or as a shim between your application and
